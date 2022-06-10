@@ -24,7 +24,10 @@ namespace AccountOwnerServerAPI.Extensions
 
         public static void ConfigureIISIntegration(this IServiceCollection services)
         {
-            services.Configure<IISOptions>(options => { });
+            services.Configure<IISOptions>(options =>
+            {
+                //We do not initialize any of the properties inside the options because we are just fine with the default values
+            });
         }
     }
 }
