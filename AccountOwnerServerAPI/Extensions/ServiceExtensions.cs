@@ -1,6 +1,9 @@
 ﻿using Contracts;
+using Entities;
 using LoggerService;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -36,6 +39,15 @@ namespace AccountOwnerServerAPI.Extensions
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
             services.AddSingleton<ILoggerManager, LoggerManager>();
+        }
+
+
+        public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
+        {
+            //var connectionString = config["sqlconnection:connectionString"];
+            //services.AddDbContext<RepositoryContext>(options => options.(connectionString,
+            //    MySqlServerVersion.LatestSupportedServerVersion));
+            services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(config["sqlconnection:connectionString"]));
         }
     }
 }
