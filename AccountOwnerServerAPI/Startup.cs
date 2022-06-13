@@ -34,7 +34,7 @@ namespace AccountOwnerServerAPI
             services.ConfigureIISIntegration();
             services.ConfigureLoggerService();
             services.ConfigureSqlContext(Configuration);
-
+            services.ConfigureRepositoryWrapper();
             services.AddControllers();
         }
 

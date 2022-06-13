@@ -18,10 +18,12 @@ namespace AccountOwnerServerAPI.Controllers
         };
 
         private readonly ILoggerManager _logger;
+        private IRepositoryWrapper _repository;
 
-        public WeatherForecastController(ILoggerManager logger)
+        public WeatherForecastController(ILoggerManager logger, IRepositoryWrapper repository)
         {
             _logger = logger;
+            _repository = repository;
         }
 
         [HttpGet]
@@ -32,6 +34,8 @@ namespace AccountOwnerServerAPI.Controllers
             _logger.LogWarn("Here is warn message from the controller.");
             _logger.LogError("Here is error message from the controller.");
 
+            var domesticAccounts = _repository.Account.FindByCondition(x => x.AccountType.Equals("Domestic"));
+            var owners = _repository.Owner.FindAll();
             return new string[] { "value1", "value2" };
         }
     }

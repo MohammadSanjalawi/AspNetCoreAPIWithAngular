@@ -5,10 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Repository;
 
 namespace AccountOwnerServerAPI.Extensions
 {
@@ -25,8 +22,6 @@ namespace AccountOwnerServerAPI.Extensions
            });
         }
 
-
-
         public static void ConfigureIISIntegration(this IServiceCollection services)
         {
             services.Configure<IISOptions>(options =>
@@ -35,12 +30,10 @@ namespace AccountOwnerServerAPI.Extensions
             });
         }
 
-
         public static void ConfigureLoggerService(this IServiceCollection services)
         {
             services.AddSingleton<ILoggerManager, LoggerManager>();
         }
-
 
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
@@ -48,6 +41,11 @@ namespace AccountOwnerServerAPI.Extensions
             //services.AddDbContext<RepositoryContext>(options => options.(connectionString,
             //    MySqlServerVersion.LatestSupportedServerVersion));
             services.AddDbContext<RepositoryContext>(options => options.UseSqlServer(config["sqlconnection:connectionString"]));
+        }
+
+        public static void ConfigureRepositoryWrapper(this IServiceCollection services)
+        {
+            services.AddScoped<IRepositoryWrapper, RepositoryWrapper> ();
         }
     }
 }
