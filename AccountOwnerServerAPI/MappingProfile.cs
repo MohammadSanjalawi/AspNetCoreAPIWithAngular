@@ -14,6 +14,7 @@ namespace AccountOwnerServerAPI
         public MappingProfile()
         {
             CreateMap<Owner, OwnerDto>();
+            CreateMap<Account, AccountDto>();
         }
     }
 }

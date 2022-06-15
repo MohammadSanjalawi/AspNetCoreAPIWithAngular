@@ -1,15 +1,16 @@
 ﻿using Contracts;
 using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Repository
 {
-    public class OwnerRepository : RepositoryBase<Owner>,IOwnerRepository
+    public class OwnerRepository : RepositoryBase<Owner>, IOwnerRepository
     {
-        public OwnerRepository(RepositoryContext repositoryContext):base(repositoryContext)
+        public OwnerRepository(RepositoryContext repositoryContext) : base(repositoryContext)
         {
 
         }
@@ -22,6 +23,13 @@ namespace Repository
         public Owner GetOwnerById(Guid ownerId)
         {
             return FindByCondition(owner => owner.OwnerId.Equals(ownerId)).FirstOrDefault();
+        }
+
+        public Owner GetOwnerWithDetails(Guid ownerId)
+        {
+            return FindByCondition(owner => owner.OwnerId.Equals(ownerId))
+                .Include(account => account.Accounts)
+                .FirstOrDefault();
         }
     }
 }
