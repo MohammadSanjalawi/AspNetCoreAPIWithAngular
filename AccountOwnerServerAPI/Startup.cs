@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using NLog;
 using System.IO;
+using System.Reflection;
 
 namespace AccountOwnerServerAPI
 {
@@ -36,6 +37,7 @@ namespace AccountOwnerServerAPI
             services.ConfigureSqlContext(Configuration);
             services.ConfigureRepositoryWrapper();
             services.AddControllers();
+            services.AddAutoMapper(typeof(Startup));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
