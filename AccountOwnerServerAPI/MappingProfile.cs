@@ -15,6 +15,7 @@ namespace AccountOwnerServerAPI
         {
             CreateMap<Owner, OwnerDto>();
             CreateMap<Account, AccountDto>();
+            CreateMap<OwnerForCreationDto, Owner>();
         }
     }
 }
