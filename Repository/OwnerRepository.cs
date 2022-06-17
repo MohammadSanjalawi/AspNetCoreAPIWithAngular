@@ -36,5 +36,10 @@ namespace Repository
                 .Include(account => account.Accounts)
                 .FirstOrDefault();
         }
+
+        public void UpdateOwner(Owner owner)
+        {
+            Update(owner);
+        }
     }
 }
