@@ -33,6 +33,11 @@ namespace AccountOwnerServerAPI.Controllers
         {
             try
             {
+                if (!ownerParameters.ValidYearRange)
+                {
+                    return BadRequest("Max year of birth can't be less than min year of birth.");
+                }
+
                 var owners = _repository.Owner.GetOwners(ownerParameters);
 
                 var metadata = new
@@ -59,7 +64,7 @@ namespace AccountOwnerServerAPI.Controllers
             }
         }
 
-        [HttpGet("{id}", Name="GetOwnerById")]
+        [HttpGet("{id}", Name = "GetOwnerById")]
         public IActionResult GetOwnerById(Guid id)
         {
             try
@@ -112,11 +117,11 @@ namespace AccountOwnerServerAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateOwner([FromBody]OwnerForCreationDto owner)
+        public IActionResult CreateOwner([FromBody] OwnerForCreationDto owner)
         {
             try
             {
-                if(owner is null)
+                if (owner is null)
                 {
                     _logger.LogError("Owner object sent from client is null.");
                     return BadRequest("Owner object is null");
@@ -147,7 +152,7 @@ namespace AccountOwnerServerAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateOwner(Guid id,[FromBody]OwnerForUpdateDto owner)
+        public IActionResult UpdateOwner(Guid id, [FromBody] OwnerForUpdateDto owner)
         {
             try
             {
