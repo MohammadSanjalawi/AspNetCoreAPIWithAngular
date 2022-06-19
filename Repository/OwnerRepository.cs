@@ -33,8 +33,11 @@ namespace Repository
 
             //implementation with filtering
             var owners = FindByCondition(o => o.DateOfBirth.Year >= ownerParameters.MinYearOfBirth &&
-                                  o.DateOfBirth.Year <= ownerParameters.MaxYearOfBirth)
-                .OrderBy(on => on.Name);
+                                  o.DateOfBirth.Year <= ownerParameters.MaxYearOfBirth);
+
+
+            SearchByName(ref owners, ownerParameters.Name);
+
 
             return PagedList<Owner>.ToPagedList(owners,
             ownerParameters.PageNumber,
@@ -58,6 +61,16 @@ namespace Repository
         public void UpdateOwner(Owner owner)
         {
             Update(owner);
+        }
+
+
+        private void SearchByName(ref IQueryable<Owner> owners, string ownerName)
+        {
+            if (!owners.Any() || string.IsNullOrWhiteSpace(ownerName))
+                return;
+
+
+            owners = owners.Where(o => o.Name.ToLower().Contains(ownerName.Trim().ToLower()));
         }
     }
 }
